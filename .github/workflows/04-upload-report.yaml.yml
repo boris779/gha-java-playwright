@@ -1,0 +1,40 @@
+name: 04-upload-report.yaml
+on: push
+
+jobs:
+  tests:
+    name: Run and upload report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Cache mvn packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}            
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'jetbrains'
+          java-version: '21'
+
+      - name: maven build
+        run: mvn clean install
+
+      - name: start playwright browser
+        run: mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install chromium"
+
+      - name: Run Tests via Maven
+        run: mvn test surefire-report:report
+
+        with:
+          name: test-artifacts  # The artifact name displayed in GitHub Actions.
+          path: |
+            target/reports
+            target/surefire-reports
