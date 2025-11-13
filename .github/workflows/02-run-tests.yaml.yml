@@ -1,0 +1,25 @@
+name: 02-run-tests.yaml
+on: push
+
+jobs:
+  second-job:
+    name: Run Playwright Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'openjdk'
+          java-version: '22'
+
+      - name: maven build
+        run: mvn clean install
+
+      - name: start playwright browser
+        run: mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install chromium"
+
+      - name: Run Tests via Maven
+        run: mvn test
