@@ -9,10 +9,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
-      - name: run tests
-
-
-
       - name: Cache mvn packages
         uses: actions/cache@v4
         with:
