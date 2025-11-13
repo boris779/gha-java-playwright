@@ -1,4 +1,4 @@
-name: 04-upload-report.yaml
+name: 04 with report generation
 on: push
 
 jobs:
