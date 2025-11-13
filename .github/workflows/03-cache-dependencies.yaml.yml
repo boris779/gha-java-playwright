@@ -1,5 +1,5 @@
 name: 03-cache-dependencies.yaml
-on: push
+on: workflow_dispatch
 
 jobs:
   thrid-job:

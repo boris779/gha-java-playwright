@@ -1,4 +1,4 @@
-name: 04 with report generation
+name: 05 with report publishing
 on: push
 
 jobs:

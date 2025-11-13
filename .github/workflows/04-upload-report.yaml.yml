@@ -1,5 +1,5 @@
 name: 04 with report generation
-on: push
+on: workflow_dispatch
 
 jobs:
   tests:
